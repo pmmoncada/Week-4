@@ -1,0 +1,18 @@
+h1 {
+  font-family: "Baufra", Helvetica, sans-serif;
+  font-size: 35px;
+  text-align: center;
+}
+
+h2 {
+  font-family: "Baufra", Helvetica, sans-serif;
+  font-size: 20px;
+  text-align: center;
+}
+
+#mapContainer {
+  height: 500px;
+  width: 800px;
+  background: lightgray;
+  margin: 0 auto;
+}
