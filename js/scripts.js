@@ -10,15 +10,12 @@ var map = new mapboxgl.Map({
   zoom: 7,
 });
 
-// Add zoom and rotation controls to the map.
-map.addControl(new mapboxgl.NavigationControl());
-
 //Lookup Department names
 var DeptLookup = (code) => {
   switch (code) {
     case 1:
       return {
-        color: '#',
+        color: '#A9A9A9',
         description: 'Atlantida',
       };
     case 2:
@@ -114,14 +111,127 @@ var DeptLookup = (code) => {
   }
 };
 
-// use jquery to programmatically create a Legend
-// for numbers 1 - 11, get the land use color and description
-for (var i=1; i<18; i++) {
-  // lookup the location info for the current iteration
-  const locationInfo = DeptLookup(i);
+// we can't add our own sources and layers until the base style is finished loading
+map.on('style.load', function() {
+  // this sets up the geojson as a source in the map, which I can use to add visual layers
+  map.addSource('departmentsHN', {
+     type: 'geojson',
+     data: './Data/deparmentsHN.geojson',
+   });
 
-// this sets up the geojson as a source in the map, which I can use to add visual layers
-map.addSource('limiteMunicipal', {
-  type: 'geojson',
-  data: './Data/limiteMunicipal.geojson',
-});
+   // add a custom-styled layer for tax lots
+   map.addLayer({
+     id: 'departments-fill',
+     type: 'fill',
+     source: 'departmentsHN',
+     paint: {
+       'fill-opacity': 0.7,
+       'fill-color': {
+         type: 'categorical',
+         property: 'OBJECTID',
+         stops: [
+             [
+               '01',
+               DeptLookup(1).color,
+             ],
+             [
+               "02",
+               DeptLookup(2).color,
+             ],
+             [
+               "03",
+               DeptLookup(3).color,
+             ],
+             [
+               "04",
+               DeptLookup(4).color,
+             ],
+             [
+               "05",
+                DeptLookup(5).color,
+             ],
+             [
+               "06",
+                DeptLookup(6).color,
+             ],
+             [
+               "07",
+                DeptLookup(7).color,
+             ],
+             [
+               "08",
+                DeptLookup(8).color,
+             ],
+             [
+               "09",
+                DeptLookup(9).color,
+             ],
+             [
+               "10",
+                DeptLookup(10).color,
+             ],
+             [
+               "11",
+                DeptLookup(11).color,
+             ],
+             [
+               "12",
+                DeptLookup(11).color,
+             ],
+             [
+               "13",
+                DeptLookup(11).color,
+             ],
+             [
+               "14",
+                DeptLookup(11).color,
+             ],
+             [
+               "15",
+                DeptLookup(11).color,
+             ],
+             [
+               "16",
+                DeptLookup(11).color,
+             ],
+             [
+               "17",
+                DeptLookup(11).color,
+             ],
+             [
+               "18",
+                DeptLookup(11).color,
+             ],
+           ]
+         }
+     }
+   }, 'waterway-label')
+  });
+
+
+  // let's hack the basemap style a bit
+  // you can use map.getStyle() in the console to inspect the basemap layers
+  //map.setPaintProperty('water', 'fill-color', '#a4bee8')
+
+
+
+
+
+
+
+// // Add zoom and rotation controls to the map.
+// map.addControl(new mapboxgl.NavigationControl());
+//
+
+//
+// // use jquery to programmatically create a Legend
+// // for numbers 1 - 11, get the land use color and description
+// for (var i=1; i<18; i++) {
+//   // lookup the location info for the current iteration
+//   const locationInfo = DeptLookup(i);
+//
+// // this sets up the geojson as a source in the map, which I can use to add visual layers
+// map.addSource('limiteMunicipal', {
+//   type: 'geojson',
+//   data: './Data/limiteMunicipal.geojson',
+// });
