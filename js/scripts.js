@@ -10,6 +10,9 @@ var map = new mapboxgl.Map({
   zoom: 6.5,
 });
 
+
+
+
 //Lookup Department names
 var DeptLookup = (code) => {
   console.log(code);
@@ -116,15 +119,20 @@ var DeptLookup = (code) => {
 // Add zoom and rotation controls
 map.addControl(new mapboxgl.NavigationControl());
 
-// we can't add our own sources and layers until the base style is finished loading
+
+
+//Data source: https://data.humdata.org/dataset/division-politica-de-honduras
+//Then made into geojson on QGIS
+
+//Finish loading base style
 map.on('style.load', function() {
-  // this sets up the geojson as a source in the map, which I can use to add visual layers
+// set up the geojson as a source in the map
   map.addSource('departmentsHN', {
      type: 'geojson',
      data: './Data/departmentsHN.geojson',
    });
 
-   // add a custom-styled layer for tax lots
+// add a custom-styled layer for each Departamento
    map.addLayer({
      id: 'departments-fill',
      type: 'fill',
@@ -212,7 +220,7 @@ map.on('style.load', function() {
      }
    }, 'waterway-label')
 
-    // add an empty data source, which we will use to highlight the lot the user is hovering over
+    // add an empty data source, to highlight the lot the user is hovering over
     map.addSource('highlight-feature-depto', {
       type: 'geojson',
       data: {
