@@ -11,8 +11,6 @@ var map = new mapboxgl.Map({
 });
 
 
-
-
 //Lookup Department names
 var DeptLookup = (code) => {
   console.log(code);
@@ -132,7 +130,7 @@ map.on('style.load', function() {
      data: './Data/departmentsHN.geojson',
    });
 
-// add a custom-styled layer for each Departamento
+// add a custom-styled layer for each Depar
    map.addLayer({
      id: 'departments-fill',
      type: 'fill',
@@ -220,7 +218,7 @@ map.on('style.load', function() {
      }
    }, 'waterway-label')
 
-    // add an empty data source, to highlight the lot the user is hovering over
+    // add an empty data source, which we will use to highlight the lot the user is hovering over
     map.addSource('highlight-feature-depto', {
       type: 'geojson',
       data: {
@@ -250,8 +248,8 @@ map.on('style.load', function() {
 
         // set this lot's polygon feature as the data for the highlight source
         map.getSource('highlight-feature-depto').setData(lot.geometry);
-      }// else {
-      //  map.getCanvas().style.cursor = 'default'; // make the cursor default
+      } else {
+       map.getCanvas().style.cursor = 'default'; // make the cursor default
 
         // reset the highlight source to an empty featurecollection
         map.getSource('highlight-feature-depto').setData({
