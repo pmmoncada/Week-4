@@ -116,7 +116,7 @@ map.on('style.load', function() {
   // this sets up the geojson as a source in the map, which I can use to add visual layers
   map.addSource('departmentsHN', {
      type: 'geojson',
-     data: './Data/deparmentsHN.geojson',
+     data: './Data/departmentsHN.geojson',
    });
 
    // add a custom-styled layer for tax lots
@@ -131,75 +131,75 @@ map.on('style.load', function() {
          property: 'OBJECTID',
          stops: [
              [
-               '01',
+               1,
                DeptLookup(1).color,
              ],
              [
-               "02",
+               2
                DeptLookup(2).color,
              ],
              [
-               "03",
+               3,
                DeptLookup(3).color,
              ],
              [
-               "04",
+               4,
                DeptLookup(4).color,
              ],
              [
-               "05",
+               5,
                 DeptLookup(5).color,
              ],
              [
-               "06",
+               6,
                 DeptLookup(6).color,
              ],
              [
-               "07",
+               7,
                 DeptLookup(7).color,
              ],
              [
-               "08",
+               8,
                 DeptLookup(8).color,
              ],
              [
-               "09",
+               9,
                 DeptLookup(9).color,
              ],
              [
-               "10",
+               10,
                 DeptLookup(10).color,
              ],
              [
-               "11",
+               11,
                 DeptLookup(11).color,
              ],
              [
-               "12",
+               12,
                 DeptLookup(11).color,
              ],
              [
-               "13",
+               13,
                 DeptLookup(11).color,
              ],
              [
-               "14",
+               14,
                 DeptLookup(11).color,
              ],
              [
-               "15",
+               15,
                 DeptLookup(11).color,
              ],
              [
-               "16",
+               16,
                 DeptLookup(11).color,
              ],
              [
-               "17",
+               17,
                 DeptLookup(11).color,
              ],
              [
-               "18",
+               18,
                 DeptLookup(11).color,
              ],
            ]
