@@ -6,12 +6,13 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY3dob25nIiwiYSI6IjAyYzIwYTJjYTVhMzUxZTVkMzdmY
 var map = new mapboxgl.Map({
   container: 'mapContainer',
   style: 'mapbox://styles/mapbox/light-v9',
-  center: [-87.197714, 14.081646],
-  zoom: 7,
+  center: [-86.401978,14.716448],
+  zoom: 6.5,
 });
 
 //Lookup Department names
 var DeptLookup = (code) => {
+  console.log(code);
   switch (code) {
     case 1:
       return {
@@ -111,6 +112,10 @@ var DeptLookup = (code) => {
   }
 };
 
+
+// Add zoom and rotation controls
+map.addControl(new mapboxgl.NavigationControl());
+
 // we can't add our own sources and layers until the base style is finished loading
 map.on('style.load', function() {
   // this sets up the geojson as a source in the map, which I can use to add visual layers
@@ -128,14 +133,14 @@ map.on('style.load', function() {
        'fill-opacity': 0.7,
        'fill-color': {
          type: 'categorical',
-         property: 'OBJECTID',
+         property: "OBJECTID",
          stops: [
              [
                1,
                DeptLookup(1).color,
              ],
              [
-               2
+               2,
                DeptLookup(2).color,
              ],
              [
@@ -176,62 +181,85 @@ map.on('style.load', function() {
              ],
              [
                12,
-                DeptLookup(11).color,
+                DeptLookup(12).color,
              ],
              [
                13,
-                DeptLookup(11).color,
+                DeptLookup(13).color,
              ],
              [
                14,
-                DeptLookup(11).color,
+                DeptLookup(14).color,
              ],
              [
                15,
-                DeptLookup(11).color,
+                DeptLookup(15).color,
              ],
              [
                16,
-                DeptLookup(11).color,
+                DeptLookup(16).color,
              ],
              [
                17,
-                DeptLookup(11).color,
+                DeptLookup(17).color,
              ],
              [
                18,
-                DeptLookup(11).color,
+                DeptLookup(18).color,
              ],
            ]
          }
      }
    }, 'waterway-label')
+
+    // add an empty data source, which we will use to highlight the lot the user is hovering over
+    map.addSource('highlight-feature-depto', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: []
+      }
+    });
+
+    // when the mouse moves, do stuff!
+    map.on('mousemove', function (e) {
+      // query for the features under the mouse, but only in the lots layer
+      var features = map.queryRenderedFeatures(e.point, {
+          layers: ['departments-fill'],
+      });
+
+      // get the first feature from the array of returned features.
+      var lot = features[0]
+
+      if (lot) {  // if there's a lot under the mouse, do stuff
+        map.getCanvas().style.cursor = 'pointer';  // make the cursor a pointer
+
+        // lookup the corresponding description for the land use code
+        // var deptoDescription = DeptLookup(parseInt(lot.properties.DEPTO)).description;
+
+        // use jquery to display the address and land use description to the sidebar
+        $('#names').text(lot.properties.DEPTO);
+
+        // set this lot's polygon feature as the data for the highlight source
+        map.getSource('highlight-feature-depto').setData(lot.geometry);
+      }// else {
+      //  map.getCanvas().style.cursor = 'default'; // make the cursor default
+
+        // reset the highlight source to an empty featurecollection
+        map.getSource('highlight-feature-depto').setData({
+          type: 'FeatureCollection',
+          features: []
+        });
+    //  }
+    })
   });
 
 
-  // let's hack the basemap style a bit
-  // you can use map.getStyle() in the console to inspect the basemap layers
-  //map.setPaintProperty('water', 'fill-color', '#a4bee8')
 
 
 
-
-
-
-
-// // Add zoom and rotation controls to the map.
-// map.addControl(new mapboxgl.NavigationControl());
-//
-
-//
 // // use jquery to programmatically create a Legend
 // // for numbers 1 - 11, get the land use color and description
 // for (var i=1; i<18; i++) {
 //   // lookup the location info for the current iteration
 //   const locationInfo = DeptLookup(i);
-//
-// // this sets up the geojson as a source in the map, which I can use to add visual layers
-// map.addSource('limiteMunicipal', {
-//   type: 'geojson',
-//   data: './Data/limiteMunicipal.geojson',
-// });

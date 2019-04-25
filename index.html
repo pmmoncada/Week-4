@@ -16,12 +16,20 @@
 <body>
 
   <div>
-    <h1> Map with the division for the states and municipalities of Honduras</h1>
-    <h2> Hover over each to get what each areas have specifically </h2>
-    <p> Click on each marker to know ____ </p>
+    <h1> Map with the division for the 18 Departmentos (States) of Honduras</h1>
+    <h2> Hover over each state to know it's specific name</h2>
   </div>
 
-  <div id="mapContainer"></div>
+  <div id="mapContainer">
+    <div id="sidebar">
+      <div class="info-box">
+        <h3>Name for Each Departamento</h3>
+        <span id="names"> </span></br>
+      </div>
+    </div>
+  </div>
+
+
 
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
   <script
