@@ -217,7 +217,7 @@ map.on('style.load', function() {
       type: 'geojson',
       data: {
         type: 'FeatureCollection',
-        features: []
+        features: [0]
       }
     });
 
